@@ -1,0 +1,35 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+
+<body class='container'>
+  <div class="jumbotron">
+    <h1>SINATRA course</h1>
+    <p>super blog...</p>
+  </div>
+
+  <div class="col-md-8">
+    <% @posts.reverse.each do |post| %>
+      <%= post[:created_at] %>
+      <h1>
+        <%= post[:title] %>
+      </h1>
+      <%= post[:body] %>
+      <hr>
+    <% end %>
+  </div>
+
+  <div class="col-md-4">
+    <form action="/add_post" method="post">
+
+      <label for="title">Titulo</label>
+      <input type="text" name="title" class="form-control"></br>
+
+      <label for="body">Mensaje</label>
+      <textarea name="body" class="form-control"></textarea></br>
+
+      <input type="submit" value="Nuevo" class="btn btn-primary">
+    </form>
+  </div>
+
+</body>
