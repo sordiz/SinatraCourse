@@ -20,11 +20,19 @@ class SampleApp < Sinatra::Application
 
   post '/add_post' do
     settings.mongo[:posts].insert_one(
-      {"title"      => params[:title], 
+      {"title"      => params[:title],
        "body"       => params[:body],
        "created_at" => Time.now})
 
     redirect '/'
+  end
+
+  get '/login' do
+    session[:login_status] = "Logged"
+  end
+
+  get '/logout' do
+    session[:login_status] = "Not logged"
   end
 
   get '/' do
@@ -35,8 +43,23 @@ class SampleApp < Sinatra::Application
     end
     erb 'posts'.to_sym
   end
- 
+
+  get '/inline/:name' do
+    @name = params[:name]
+    erb :inline_template
+  end
+
   after do
     p "RESPONSE: " + response.to_s
-  end 
+  end
 end
+
+__END__
+
+@@ layout
+Login status: <%= session[:login_status] %>
+</br>
+<%= yield %>
+
+@@ inline_template
+Hello <%= @name %>, I am an Inline Template.
